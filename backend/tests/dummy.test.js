@@ -32,3 +32,18 @@ describe('total likes', () => {
     expect(result).toBe(10)
   })
 })
+
+describe('favorite blog', () => {
+  const list = [
+    {
+      title: 'Hello',
+      author: 'Brandon',
+      likes: 12
+    }
+  ]
+
+  test('the liked blog', () => {
+    const result = listHelper.favoriteBlog(list)
+    expect(result).toEqual(12)
+  })
+})
