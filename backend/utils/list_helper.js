@@ -18,8 +18,22 @@ const favoriteBlog = (lists) => {
   return mayor
 }
 
+const mostBlogs = (blogs) => {
+  let mayor = 0
+  let author = ''
+  for (let i = 0; i < blogs.length; i++) {
+    if(blogs[i].blogs > mayor) {
+        mayor = blogs[i].blogs
+        author = blogs[i].author
+    }
+  }
+
+  return { author, blogs: mayor }
+}
+
 module.exports = {
   dummy,
   totalLikes,
-  favoriteBlog
+  favoriteBlog,
+  mostBlogs
 }
