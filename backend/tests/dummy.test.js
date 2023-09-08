@@ -63,19 +63,19 @@ describe('most blog', () => {
 })
 
 describe('most likes', () => {
-    const list = [
-      {
-        author: 'Brandon',
-        likes: 17
-      },
-      {
-        author: 'Alfredo',
-        likes: 18
-      }
-    ]
-  
-    test('the most liked blog', () => {
-      const result = listHelper.mostlikes(list)
-      expect(result).toEqual({ author: 'Alfredo', likes: 18 })
-    })
+  const list = [
+    {
+      author: 'Brandon',
+      likes: 17
+    },
+    {
+      author: 'Alfredo',
+      likes: 18
+    }
+  ]
+
+  test('the most liked blog', () => {
+    const result = listHelper.mostlikes(list)
+    expect(result).toEqual({ author: 'Alfredo', likes: 18 })
   })
+})
