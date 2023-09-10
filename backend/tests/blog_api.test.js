@@ -49,6 +49,24 @@ test('insert a new blog', async () => {
   expect(response.body).toHaveLength(size);
 });
   
+test('testing likes in data', async () => {
+  const newBlog = {
+    title: 'test 2',
+    author: 'Elizabeth',
+    url: 'elizabeth.com'
+  }
+  if(newBlog.likes === undefined) {
+    newBlog.likes = 0
+  }
+
+  const response = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+  
+  expect(response.body.likes).toBe(0);
+});
 
 afterAll(() => {
     mongoose.connection.close()
