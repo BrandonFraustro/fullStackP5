@@ -20,8 +20,7 @@ test('there are two blogs', async () => {
 
 test('id is defined', async () => {
   const response = await api.get('/api/blogs')
-  
-  // Verificar si id está definido en al menos un objeto de la respuesta
+
   expect(response.body[0].id).toBeDefined();
 });
 
@@ -66,6 +65,21 @@ test('testing likes in data', async () => {
     .expect('Content-Type', /application\/json/)
   
   expect(response.body.likes).toBe(0);
+});
+
+test('property title and url', async () => {
+  const newBlog = {
+    author: 'Elizabeth',
+    likes: 0
+  }
+
+  const response = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+  
+  expect(response.body.error).toContain('content missing');
 });
 
 afterAll(() => {
