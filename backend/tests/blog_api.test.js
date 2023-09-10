@@ -17,6 +17,15 @@ test('there are two blogs', async () => {
   expect(response.body).toHaveLength(2)
 })
 
+
+test('id is defined', async () => {
+  const response = await api.get('/api/blogs')
+  
+  // Verificar si id está definido en al menos un objeto de la respuesta
+  expect(response.body[0].id).toBeDefined();
+});
+  
+
 afterAll(() => {
     mongoose.connection.close()
 })
