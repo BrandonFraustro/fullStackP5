@@ -84,17 +84,34 @@ test('property title and url', async () => {
 
 
 test('a blog can be deleted', async () => {
-  const response = await api.get('/api/blogs')
-  const blogToDelete = response.body[3]
-  console.log(blogToDelete.id)
+  const initialResponse = await api.get('/api/blogs')
+  const blogToDelete = initialResponse.body[3]
 
   await api
-    .delete(`/api/notes/${blogToDelete.id}`)
+    .delete(`/api/blogs/${blogToDelete.id}`)
     .expect(204)
 
-  const contents = response.body.map(r => r.title)
-  console.log(contents)
-  expect(contents).not.toContain(blogToDelete.title)
+  const afterResponse = await api.get('/api/blogs')
+  const afterDeleteBlogs = afterResponse.body
+
+  const afterBlogTitle = afterDeleteBlogs.map(r => r.title)
+  expect(afterBlogTitle).not.toContain(blogToDelete.title)
+})
+
+test('a blog can be updated', async () => {
+  const response = await api.get('/api/blogs')
+  const blogToUpdate = response.body[3].id
+  console.log(blogToUpdate)
+
+  const newLikes = 5
+
+  const responseUpdate = await api
+    .put(`/api/blogs/${blogToUpdate}`)
+    .send({ likes: newLikes })
+
+  console.log(responseUpdate.body)
+  expect(responseUpdate.body.likes).toBe(newLikes)
+
 })
 
 afterAll(() => {
