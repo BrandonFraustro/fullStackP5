@@ -82,6 +82,21 @@ test('property title and url', async () => {
   expect(response.body.error).toContain('content missing');
 });
 
+
+test('a blog can be deleted', async () => {
+  const response = await api.get('/api/blogs')
+  const blogToDelete = response.body[3]
+  console.log(blogToDelete.id)
+
+  await api
+    .delete(`/api/notes/${blogToDelete.id}`)
+    .expect(204)
+
+  const contents = response.body.map(r => r.title)
+  console.log(contents)
+  expect(contents).not.toContain(blogToDelete.title)
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })
