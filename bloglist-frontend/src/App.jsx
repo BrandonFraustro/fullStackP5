@@ -7,6 +7,7 @@ import loginService from './services/login'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
+  const [notification, setNotification] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -42,15 +43,17 @@ const App = () => {
       //console.log(user);
       blogService.setToken(user.token)
       setUser(user)
+      setNotification(`Welcome ${user.username}!`)
+      setTimeout(() => {
+        setNotification('')
+      }, 5000);
       setUsername('')
       setPassword('')
     } catch(exception) {
-      //console.log('wrong credentials');
-      setErrorMessage('Wrong credentials')
+      setErrorMessage('Wrong username or password')
       setTimeout(() => {
         setErrorMessage('')
       }, 5000);
-      //console.log('wrong credentials');
     }
   }
 
@@ -66,12 +69,19 @@ const App = () => {
     blogService.create(blogObject)
     .then(returnObj => {
       setBlogs(blogs.concat(returnObj))
+      setNotification(`A new blog ${blogObject.title} by ${blogObject.author} added`)
+      setTimeout(() => {
+        setNotification('')
+      }, 5000);
       setAuthor('')
       setTitle('')
       setUrl('')
     })
+    .catch(error => {
+      setErrorMessage(error)
+    })
 
-    console.log(blogObject);
+    //console.log(blogObject);
   }
 
   const handleLogOut = (event) => {
@@ -82,24 +92,25 @@ const App = () => {
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <h2>Log in to application</h2>
-        <div>
-          username
-          <input type="text" 
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input type="text" 
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type='submit'>login</button>
-      </form>
+      <Notification message={[errorMessage, notification]}/>
+      <div>
+        username
+        <input type="text" 
+          value={username}
+          name="Username"
+          onChange={({ target }) => setUsername(target.value)}
+        />
+      </div>
+      <div>
+        password
+        <input type="text" 
+          value={password}
+          name="Password"
+          onChange={({ target }) => setPassword(target.value)}
+        />
+      </div>
+      <button type='submit'>login</button>
+    </form>
   )
 
   const blogsResult = () => (
@@ -140,13 +151,12 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={errorMessage}/>
-
       {
         user === null ?
         loginForm() :
         (<div>
           <h2>Blogs</h2>
+          <Notification message={[errorMessage, notification]}/>
           <p>{user.username} logged in</p>
           <button onClick={handleLogOut}>logout</button>
           {blogsForm()}
