@@ -24,4 +24,17 @@ const create = async newObject => {
   }
 }
 
-export default { getAll, setToken, create }
+const update = async (id, newObject) => {
+  const config = {
+    headers: { Authorization: token }
+  }
+
+  try {
+    const response = await axios.put(`http://localhost:3003/api/blogs/${id}`, newObject, config)
+    return response.data
+  } catch(error) {
+    console.log(error.response)
+  }
+}
+
+export default { getAll, setToken, create, update }

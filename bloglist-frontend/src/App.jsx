@@ -75,7 +75,7 @@ const App = () => {
       title: title,
       author: author,
       url: url,
-      likes: Math.floor((Math.random() * 10) + 1)
+      likes: 0
     }
 
     blogService.create(blogObject)
@@ -120,10 +120,15 @@ const App = () => {
     )
   }
 
+  const handleUpdatedBlog = (updatedBlog) => {
+    const newBlogs = blogs.map((blog) => (blog.id === updatedBlog.id ? updatedBlog : blog))
+    setBlogs(newBlogs)
+  }
+
   const blogsResult = () => (
     <div>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} handleUpdatedBlog={handleUpdatedBlog}/>
         )}
     </div>
   )
