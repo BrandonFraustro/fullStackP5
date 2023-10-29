@@ -125,13 +125,20 @@ const App = () => {
     setBlogs(newBlogs)
   }
 
-  const blogsResult = () => (
+  
+  const blogsResult = () => {
+    const sortedBlogs = [...blogs]
+    //console.log(sortedBlogs.sort((a, b) => b.likes - a.likes))
+    sortedBlogs.sort((a, b) => b.likes - a.likes)
+    //console.log(sortedBlogs.likes);
+    return (
     <div>
-      {blogs.map(blog =>
+      {sortedBlogs.map(blog =>
         <Blog key={blog.id} blog={blog} handleUpdatedBlog={handleUpdatedBlog}/>
         )}
     </div>
-  )
+    )
+  }
 
   const blogsForm = () => {
     const hideWhenVisible = { display: createBlogVisible ? 'none' : '' }
