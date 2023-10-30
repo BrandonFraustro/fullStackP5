@@ -125,16 +125,26 @@ const App = () => {
     setBlogs(newBlogs)
   }
 
+  const handleDeletedBlogs = (updatedBlog) => {
+    if (updatedBlog instanceof Error) {
+      //console.log('App Error:', updatedBlog);
+      setErrorMessage(updatedBlog.response.data)
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000);
+    } else if(updatedBlog) {
+      const updatedBlogs = blogs.filter((blog) => (blog.id !== updatedBlog.id))
+      setBlogs(updatedBlogs)
+    }
+  }
   
   const blogsResult = () => {
     const sortedBlogs = [...blogs]
-    //console.log(sortedBlogs.sort((a, b) => b.likes - a.likes))
     sortedBlogs.sort((a, b) => b.likes - a.likes)
-    //console.log(sortedBlogs.likes);
     return (
     <div>
       {sortedBlogs.map(blog =>
-        <Blog key={blog.id} blog={blog} handleUpdatedBlog={handleUpdatedBlog}/>
+        <Blog key={blog.id} blog={blog} handleUpdatedBlog={handleUpdatedBlog} handleDeletedBlogs={handleDeletedBlogs}/>
         )}
     </div>
     )
