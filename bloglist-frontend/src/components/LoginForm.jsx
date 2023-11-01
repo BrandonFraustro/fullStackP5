@@ -34,6 +34,8 @@ const LoginForm = ({
   )
 }
 
+LoginForm.displayName = 'LoginForm'
+
 LoginForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleUsernameChange: PropTypes.func.isRequired,
