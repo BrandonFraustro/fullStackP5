@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './Blog.css'
+//import './Blog.css'
 import blogService from '../services/blogs'
 
 const Blog = ({ blog, handleUpdatedBlog, handleDeletedBlogs }) => {
@@ -43,7 +43,7 @@ const Blog = ({ blog, handleUpdatedBlog, handleDeletedBlogs }) => {
 
   return (
     <div className="blog-content">
-      <div style={hideWhenVisible}>
+      <div style={hideWhenVisible} className='blog-test'>
         {blog.title} {blog.author}
         <button className='button-blog' onClick={() => setDataBlog(true)}>View</button>
       </div>
