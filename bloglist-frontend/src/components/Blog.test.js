@@ -1,6 +1,6 @@
 import React from "react";
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import { prettyDOM } from "@testing-library/react";
 import Blog from "./Blog";
 
@@ -26,4 +26,29 @@ test('test: a blog with title and author', () => {
 
   expect(div).not.toHaveTextContent('testing.com');
   expect(div).not.toHaveTextContent('6');
+})
+
+describe('<Blog />', () => {
+  test('renders title, author, url and likes before click the button', () => {
+    const blogTest = {
+      title: 'Component testing with react',
+      author: 'Brandon',
+      url: 'testing.com',
+      likes: 6
+    }
+    const mockHandlerUpdate = jest.fn()
+    const mockHandlerDelete = jest.fn()
+  
+    const component = render(
+      <Blog blog={blogTest} handleUpdatedBlog={mockHandlerUpdate} handleDeletedBlogs={mockHandlerDelete}/>
+    )
+  
+    const button = component.container.querySelector('.button-blog')
+    fireEvent.click(button)
+    
+    expect(component.container).toHaveTextContent('Component testing with react')
+    expect(component.container).toHaveTextContent('Brandon')
+    expect(component.container).toHaveTextContent('testing.com')
+    expect(component.container).toHaveTextContent('6')
+  })
 })

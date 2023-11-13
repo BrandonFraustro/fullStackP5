@@ -47,7 +47,7 @@ const Blog = ({ blog, handleUpdatedBlog, handleDeletedBlogs }) => {
         {blog.title} {blog.author}
         <button className='button-blog' onClick={() => setDataBlog(true)}>View</button>
       </div>
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className='togglableContent'>
         <div>
           {blog.title}
           <button className='button-blog' onClick={() => setDataBlog(false)}>Hide</button>
