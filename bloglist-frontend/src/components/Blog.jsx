@@ -20,7 +20,7 @@ const Blog = ({ blog, handleUpdatedBlog, handleDeletedBlogs }) => {
     }
     try {
       const res = await blogService.update(blog.id, blogObject)
-      //console.log(res);
+      //console.log('handleLiked is called ',res);
       handleUpdatedBlog(res)
     } catch(error) {
       console.log(error);

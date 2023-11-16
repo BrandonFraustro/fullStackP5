@@ -1,6 +1,6 @@
 import React from "react";
 import '@testing-library/jest-dom';
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, waitFor } from '@testing-library/react'
 import { prettyDOM } from "@testing-library/react";
 import Blog from "./Blog";
 
@@ -50,5 +50,31 @@ describe('<Blog />', () => {
     expect(component.container).toHaveTextContent('Brandon')
     expect(component.container).toHaveTextContent('testing.com')
     expect(component.container).toHaveTextContent('6')
+  })
+
+  test('verifying if the button like is clicked', async () => {
+    const blogTest = {
+      title: 'Component testing with react',
+      author: 'Brandon',
+      url: 'testing.com',
+      likes: 6
+    }
+    const mockHandlerUpdate = jest.fn()
+    //console.log('MockHandlerUpdate', mockHandlerUpdate.mock);
+    //const mockHandlerDelete = jest.fn()
+  
+    const component = render(
+      <Blog blog={blogTest} handleUpdatedBlog={mockHandlerUpdate}/>
+    )
+  
+    const button = component.getByText('Like')
+    //console.log('Button', button);
+    fireEvent.click(button)
+    fireEvent.click(button)
+
+    //console.log('MockHandlerDelete', mockHandlerDelete.mock.calls);
+    await waitFor(() => {
+      expect(mockHandlerUpdate.mock.calls).toHaveLength(2)
+    })
   })
 })
