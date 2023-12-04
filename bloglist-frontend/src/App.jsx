@@ -108,6 +108,7 @@ const App = () => {
     return (
       <div>
         <div>
+          <Notification message={[errorMessage, notification]}/>
           <LoginForm
             username={username}
             password={password}
