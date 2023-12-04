@@ -49,14 +49,14 @@ const App = () => {
       setNotification(`Welcome ${user.username}!`)
       setTimeout(() => {
         setNotification('')
-      }, 5000);
+      }, 1000);
       setUsername('')
       setPassword('')
     } catch(exception) {
       setErrorMessage('Wrong username or password')
       setTimeout(() => {
         setErrorMessage('')
-      }, 5000);
+      }, 1000);
     }
   }
 
@@ -67,7 +67,7 @@ const App = () => {
       setErrorMessage('Please fill in all required fields')
       setTimeout(() => {
         setErrorMessage('')
-      }, 5000);
+      }, 1000);
       return ;
     }
 
@@ -84,7 +84,7 @@ const App = () => {
       setNotification(`A new blog ${blogObject.title} by ${blogObject.author} added`)
       setTimeout(() => {
         setNotification('')
-      }, 5000);
+      }, 1000);
       setAuthor('')
       setTitle('')
       setUrl('')
@@ -93,7 +93,7 @@ const App = () => {
       setErrorMessage(error)
       setTimeout(() => {
         setErrorMessage('')
-      }, 5000);
+      }, 1000);
     })
 
     //console.log(blogObject);
@@ -132,7 +132,7 @@ const App = () => {
       setErrorMessage(updatedBlog.response.data)
       setTimeout(() => {
         setErrorMessage('')
-      }, 5000);
+      }, 1000);
     } else if(updatedBlog) {
       const updatedBlogs = blogs.filter((blog) => (blog.id !== updatedBlog.id))
       setBlogs(updatedBlogs)
@@ -185,7 +185,7 @@ const App = () => {
           <h2>Blogs</h2>
           <Notification message={[errorMessage, notification]}/>
           <p>{user.username} logged in</p>
-          <button onClick={handleLogOut}>logout</button>
+          <button id='logout_button' onClick={handleLogOut}>logout</button>
           {blogsForm()}
           {blogsResult()}
         </div>)

@@ -59,7 +59,7 @@ const Blog = ({ blog, handleUpdatedBlog, handleDeletedBlogs }) => {
         </div>
         <p>{blog.author}</p>
         <div style={canBeDeleted}>
-          <button className='button-blog' onClick={handleRemove}>Remove</button>
+          <button className='button-blog' id='removeBlog_button' onClick={handleRemove}>Remove</button>
         </div>
       </div>
     </div>  

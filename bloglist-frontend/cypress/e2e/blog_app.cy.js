@@ -6,7 +6,13 @@ describe('Blog app', function() {
       name: 'Brandon',
       password: 'brandon'
     }
+    const user2 = {
+      username: 'alfredo',
+      name: 'Alfredo',
+      password: 'alfredo'
+    }
     cy.request('POST', 'http://localhost:3003/api/users', user)
+    cy.request('POST', 'http://localhost:3003/api/users', user2)
     cy.visit('http://127.0.0.1:5173/')
   })
 
@@ -39,9 +45,8 @@ describe('Blog app', function() {
       cy.get('#username').type('brandon')
       cy.get('#password').type('brandon')
       cy.get('#login_button').click()
-    })
 
-    it('A blog can be created', function() {
+      //creatin blog
       cy.get('#createBlog_button').click()
 
       cy.get('#title').type('Creating blog by cypress')
@@ -49,23 +54,34 @@ describe('Blog app', function() {
       cy.get('#url').type('www.cypres.com')
 
       cy.get('#createBlogForm_button').click()
-
-      cy.contains('Creating blog by cypress')
     })
+
 
     it('Can be like a blog', function() {
-      cy.get('#createBlog_button').click()
-
-      cy.get('#title').type('Creating blog by cypress')
-      cy.get('#author').type('Brandon')
-      cy.get('#url').type('www.cypres.com')
-
-      cy.get('#createBlogForm_button').click()
-
       cy.get('#viewBlog_button').click()
       cy.get('#likeBlog_button').click()
 
       cy.contains('1')
+    })
+
+    it('Can be delete a blog', function() {
+      cy.get('#viewBlog_button').click()
+      cy.get('#removeBlog_button').click()
+
+      cy.contains('Creating blog by cypress').should('not.exist')
+    })
+
+    it('other user can´t delete other blogs', function() {
+      cy.get('#logout_button').click()
+
+      cy.get('#username').type('alfredo')
+      cy.get('#password').type('alfredo')
+      cy.get('#login_button').click()
+
+      cy.get('#viewBlog_button').click()
+      cy.get('#removeBlog_button').click()
+
+      cy.contains('this user can not delete this blog')
     })
   })
 })
