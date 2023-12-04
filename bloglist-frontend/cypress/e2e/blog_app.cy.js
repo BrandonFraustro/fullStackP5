@@ -46,7 +46,7 @@ describe('Blog app', function() {
       cy.get('#password').type('brandon')
       cy.get('#login_button').click()
 
-      //creatin blog
+      //creating blog
       cy.get('#createBlog_button').click()
 
       cy.get('#title').type('Creating blog by cypress')
@@ -59,6 +59,7 @@ describe('Blog app', function() {
 
     it('Can be like a blog', function() {
       cy.get('#viewBlog_button').click()
+      cy.get('#likeBlog_button').click()
       cy.get('#likeBlog_button').click()
 
       cy.contains('1')
